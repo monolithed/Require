@@ -147,11 +147,11 @@ bool Require::clean(std::string &file, std::deque<std::string> &name)
 
 	std::string::size_type size = file.size() - 1;
 
-	// Remove the last <;> character
+	// Remove the last <delimiter> character
 	if (file.at(size) == this->delimiter)
 		file.erase(size);
 
-	// Remove the first <;> character
+	// Remove the first <delimiter> character
 	if (file.at(0) == this->delimiter)
 		file.erase(0, 1);
 
