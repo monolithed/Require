@@ -142,8 +142,6 @@ The Require::clean method is used to clean up the tokens in the file names
 */
 bool Require::clean(std::string &file, std::deque<std::string> &name)
 {
-	//const char delimiter = ';';
-
 	// Erase line feeds (LF, CR, HT) and spaces
 	this->erase(file, "\n\t\r ");
 
