@@ -15,6 +15,8 @@ class Require
 		explicit Require(const bool &minificate = false) : minificate(minificate) {};
 		std::string load(std::string &file, const std::string &path);
 
+		static char delimiter;
+
 	private:
 		Require(const Require&);
 		const Require& operator=(const Require&);
@@ -32,6 +34,9 @@ class Require
 		bool clean(std::string &file, std::deque<std::string> &names);
 		const bool minificate;
 };
+
+// Delimiter for file names
+char Require::delimiter = ';';
 
 /*
 The find_equal<T>() provides a logical predicate to compare the specified values
@@ -137,7 +142,7 @@ The Require::clean method is used to clean up the tokens in the file names
 */
 bool Require::clean(std::string &file, std::deque<std::string> &name)
 {
-	const char delimiter = ';';
+	//const char delimiter = ';';
 
 	// Erase line feeds (LF, CR, HT) and spaces
 	this->erase(file, "\n\t\r ");
@@ -145,15 +150,15 @@ bool Require::clean(std::string &file, std::deque<std::string> &name)
 	std::string::size_type size = file.size() - 1;
 
 	// Remove the last <;> character
-	if (file.at(size) == delimiter)
+	if (file.at(size) == this->delimiter)
 		file.erase(size);
 
 	// Remove the first <;> character
-	if (file.at(0) == delimiter)
+	if (file.at(0) == this->delimiter)
 		file.erase(0, 1);
 
 	// Split the names
-	this->split(file, delimiter, std::back_inserter(name));
+	this->split(file, this->delimiter, std::back_inserter(name));
 
 	return name.empty();
 }
