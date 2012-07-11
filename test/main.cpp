@@ -3,18 +3,10 @@
 
 int main ()
 {
+	Require require(true);    // optional, minify
+	Require::delimiter = ';'; // optional, delimiter
 
-/*
-	std::string str("s  om e");
-
-	erase(str, " ");
-
-	std::cout << str << std::endl;
-
-*/
-	Require require(true);
-
-	std::string path("./");
+	std::string path("./");   // optional, path
 	std::string file("file_1.js;file_2.js;");
 
 	std::cout << require.load(file, path) << std::endl;
