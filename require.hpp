@@ -12,7 +12,7 @@
 class Require
 {
 	public:
-		Require(const bool &minificate = false) : minificate(minificate) {};
+		explicit Require(const bool &minificate = false) : minificate(minificate) {};
 		std::string load(std::string &file, const std::string &path);
 
 	private:
@@ -64,7 +64,7 @@ The split<T>() is used to split a string into an array of substrings
 template <typename T>
 void Require::split (const std::string &value, const char &token, T result)
 {
-	std::string::size_type start = 0, end = 0;
+	register std::string::size_type start = 0, end = 0;
 
 	while ((end = value.find(token, start)) != std::string::npos) {
 		*result++ = value.substr(start, end - start);
@@ -84,7 +84,7 @@ The erase<T>() is used to specified characters from a string
 template <typename T>
 std::string Require::erase(std::string &value, const T &token)
 {
-	std::string::size_type i = 0;
+	register std::string::size_type i = 0;
 
 	while((i = value.find_first_of(token, i)) != std::string::npos)
 		value.erase(i, 1);
@@ -137,21 +137,23 @@ The Require::clean method is used to clean up the tokens in the file names
 */
 bool Require::clean(std::string &file, std::deque<std::string> &name)
 {
+	const char delimiter = ';';
+
 	// Erase line feeds (LF, CR, HT) and spaces
 	this->erase(file, "\n\t\r ");
 
 	std::string::size_type size = file.size() - 1;
 
 	// Remove the last <;> character
-	if (file.at(size) == ';')
+	if (file.at(size) == delimiter)
 		file.erase(size);
 
 	// Remove the first <;> character
-	if (file.at(0) == ';')
+	if (file.at(0) == delimiter)
 		file.erase(0, 1);
 
 	// Split the names
-	this->split(file, ';', std::back_inserter(name));
+	this->split(file, delimiter, std::back_inserter(name));
 
 	return name.empty();
 }
