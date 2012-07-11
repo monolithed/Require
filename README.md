@@ -1,8 +1,10 @@
 # Require
 
-Require is a file loader module
-Using a modular file loader you will improve the speed and quality of your code.
-Also the Require provides a minification for file content
+Require is a file loader module. <br />
+Using a modular file loader you will improve the speed and quality of your code. <br />
+Also the Require provides a minification for file content. <br />
+<br />
+NOTE: The code tested with GCC 4.2.1
 
 ## Use
 *For example you could use the following code:*

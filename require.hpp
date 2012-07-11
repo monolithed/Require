@@ -1,3 +1,17 @@
+/*
+* <Require> is a file loader module.
+* Using a modular file loader you will improve the speed and quality of your code.
+* Also the <Require> provides a minification for file content.
+*
+* NOTE: The code tested with GCC 4.2.1
+*
+* @author: Alexander Guinness
+* @version: 1.1
+* @return std::string
+* @license: MIT
+* @date: 7/20/12 9:28 PM
+*/
+
 #pragma once
 
 #ifndef __REQUIRE_HPP__
