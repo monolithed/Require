@@ -22,14 +22,13 @@ class Require
 		template <typename T> struct find_equal;
 
 		template <typename T>
-		inline void split (const std::string &value, const char &token, T result);
+		void split (const std::string &value, const char &token, T result);
 
 		template <typename T>
 		std::string erase(std::string &value, const T &token);
 
 		inline std::string read(std::ifstream &file) const;
 		inline std::string minify(std::string &file);
-
 		bool clean(std::string &file, std::deque<std::string> &names);
 		const bool minificate;
 };
@@ -63,7 +62,7 @@ The split<T>() is used to split a string into an array of substrings
 @return {void}
 */
 template <typename T>
-inline void Require::split (const std::string &value, const char &token, T result)
+void Require::split (const std::string &value, const char &token, T result)
 {
 	std::string::size_type start = 0, end = 0;
 
