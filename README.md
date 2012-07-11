@@ -88,8 +88,8 @@ require.split(name, ';', std::back_inserter(file));
 ```
 
 **NOTE:**
-You can use any convenient container like: array, list, vector, deque and so on. <br />
-If you have a ready string with file names, you can use the <split> method <br />
+You can use any convenient container like: *array*, *list*, *vector*, *deque* and so on. <br />
+If you have a ready string with file names, you can use the "*split*" method <br />
 
 * The Require module is licensed under the MIT (MIT_LICENSE.txt) license.
 
