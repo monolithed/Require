@@ -1,6 +1,7 @@
 # Require
 
 Require is a file loader module. <br />
+The main objective of this module is to concatenate multiple files into one. <br />
 Using a modular file loader you will improve the speed and quality of your code. <br />
 Also the Require provides a minification for file content. <br />
 <br />

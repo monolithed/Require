@@ -1,5 +1,6 @@
 /*
-* <Require> is a file loader module.
+* <Require> is a cross-platform file loader module.
+* The main objective of this module is to concatenate multiple files into one.
 * Using a modular file loader you will improve the speed and quality of your code.
 * Also the <Require> provides a minification for file content.
 *
