@@ -65,7 +65,7 @@ int main()
 ;(function() {console.log('File 1!');}());;(function() {console.log('File 2!');}());
 ```
 
-**Data format 1**
+*Data format 1*
 
 ```c++
 #include <list>
@@ -75,7 +75,7 @@ file.push_back("file_1.js");
 file.push_back("file_2.js");
 ```
 
-**Data format 2**
+*Data format 2*
 
 ```c++
 #include <list>
@@ -90,6 +90,9 @@ require.split(name, ';', std::back_inserter(file));
 **NOTE:**
 You can use any convenient container like: *array*, *list*, *vector*, *deque* and so on. <br />
 If you have a ready string with file names, you can use the "*split*" method <br />
+
+<br />
+<br />
 
 * The Require module is licensed under the MIT (MIT_LICENSE.txt) license.
 
