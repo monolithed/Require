@@ -13,14 +13,14 @@ NOTE: The code tested with GCC 4.2.1
 **Files**:
 
 ```javascript
-// file_1.js
+// files/file_1.js
 ;(function() {
 	console.log('File 1!');
 }());
 ```
 
 ```javascript
-// file_2.js
+// files/file_2.js
 ;(function() {
 	console.log('File 1!');
 }());
@@ -30,16 +30,30 @@ NOTE: The code tested with GCC 4.2.1
 
 ```c++
 #include <iostream>
-#include "require.hpp"
+#include <list>
+#include "../require.hpp"
 
-int main () {
-	Require require(true);    // optional, minify
-	Require::delimiter = ';'; // optional, delimiter
+int main()
+{
+	Require require;
 
-	std::string path("./");   // optional, path
-	std::string file("file_1.js;file_2.js;");
+	std::string path("./files/");
+	std::string name("file_1.js;file_2.js;");
 
-	std::cout << require.load(file, path) << std::endl;
+	// Set file names
+	std::list<std::string> file;
+	require.split(name, ';', std::back_inserter(file));
+
+	// load the file
+	if (require.load(file, path))
+	{
+		// Get data
+		std::string data(require.data(true));
+
+		// Save data into the file
+		if (require.save("./file.js"))
+			std::cout << data << std::endl;
+	}
 
 	return 0;
 }
@@ -50,6 +64,30 @@ int main () {
 ```javascript
 ;(function() {console.log('File 1!');}());;(function() {console.log('File 2!');}());
 ```
+
+**Data format 1**
+
+```c++
+#include <list>
+
+std::list<std::string> file;
+file.push_back("file_1.js");
+file.push_back("file_2.js");
+```
+
+**Data format 2**
+#include <list>
+
+Require require;
+
+std::string name("file_1.js;file_2.js;");
+std::list<std::string> file;
+require.split(name, ';', std::back_inserter(file));
+```
+
+**NOTE:**
+You can use any convenient container like: array, list, vector, deque and so on. <br />
+If you have a ready string with file names, you can use the <split> method <br />
 
 * The Require module is licensed under the MIT (MIT_LICENSE.txt) license.
 
