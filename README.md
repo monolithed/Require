@@ -76,6 +76,8 @@ file.push_back("file_2.js");
 ```
 
 **Data format 2**
+
+```c++
 #include <list>
 
 Require require;
