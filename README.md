@@ -50,7 +50,6 @@ int main () {
 ;(function() {console.log('File 1!');}());;(function() {console.log('File 2!');}());
 ```
 
-* License
-    The Require module is licensed under the MIT (MIT_LICENSE.txt) license.
+* The Require module is licensed under the MIT (MIT_LICENSE.txt) license.
 
 * Copyright (c) 2012 [Alexander Guinness] (https://github.com/monolithed)
