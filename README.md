@@ -7,8 +7,6 @@ Also the Require provides a simple minification for file content. <br />
 <br />
 NOTE: The code tested with GCC 4.2.1
 
-## Use
-
 ##Synopsis:
 
 ```c++
@@ -114,7 +112,7 @@ if (require.load(file, path))
 *Minification data*
 
 ```c++
-std::string data(require.data());
+require.data(true);
 ```
 
 *Save data*
