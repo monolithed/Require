@@ -144,7 +144,7 @@ require.save("./file.js", mode);
 *Compiling with GCC*
 
 ```bash
-g++ -Wall -s -o main main.cpp -O2
+g++ -Wall -O2 -s -o main main.cpp
 ./main
 ```
 
