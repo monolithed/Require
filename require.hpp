@@ -17,11 +17,12 @@
 #ifndef __REQUIRE_HPP__
 #define __REQUIRE_HPP__
 
+#include <ios>
+#include <string>
 #include <fstream>
 #include <functional>
 #include <algorithm>
-#include <sstream>
-#include <deque>
+#include <iterator>
 
 class Require
 {
