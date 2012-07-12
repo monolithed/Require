@@ -135,7 +135,7 @@ class Require
 
 				i++;
 			}
-	 		return true;
+	 		return infile.good();
 		}
 
 		/*
