@@ -20,7 +20,7 @@ bool Require::save ( const std::string &name, [, const std::ios_base::openmode &
 std::string Require::data ( [ const bool &minificate = false ] );
 ```
 
-## Use
+## Using
 *For example you could use the following code:*
 
 **Files**:
@@ -77,6 +77,8 @@ int main()
 ```javascript
 ;(function() {console.log('File 1!');}());;(function() {console.log('File 2!');}());
 ```
+
+##Options:
 
 *Data format 1* <br />
 *NOTE: You can use any convenient container like: *array*, *list*, *vector*, *deque* and so on.*
