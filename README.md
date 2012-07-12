@@ -141,6 +141,13 @@ std::ios_base::openmode mode = std::ios::app | std::ios::trunc | std::ios::ate;
 require.save("./file.js", mode);
 ```
 
+*Compiling with GCC*
+
+```bash
+g++ -Wall -s -o main main.cpp -O2
+./main
+```
+
 <br />
 <br />
 
