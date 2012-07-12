@@ -1,11 +1,26 @@
 # Require
 
 Require is a file loader module. <br />
-The main objective of this module is to concatenate multiple files into one. <br />
+The main objective of this module is to concatenate multiple files into one file or stream. <br />
 Using a modular file loader you will improve the speed and quality of your code. <br />
-Also the Require provides a minification for file content. <br />
+Also the Require provides a simple minification for file content. <br />
 <br />
 NOTE: The code tested with GCC 4.2.1
+
+## Use
+
+##Synopsis:
+
+```c++
+// Loading data from files
+bool Require::load ( const T &file, [, const std::string &path = "" ] );
+
+// Saving data to a file
+bool Require::save ( const std::string &name, [, std::ios_base::openmode mode = std::ios::binary ] );
+
+// Getting data as a string
+std::string Require::data ( [ const bool &minificate = false ] );
+```
 
 ## Use
 *For example you could use the following code:*
@@ -65,7 +80,8 @@ int main()
 ;(function() {console.log('File 1!');}());;(function() {console.log('File 2!');}());
 ```
 
-*Data format 1*
+*Data format 1* <br />
+*NOTE: You can use any convenient container like: *array*, *list*, *vector*, *deque* and so on.*
 
 ```c++
 #include <list>
@@ -75,7 +91,8 @@ file.push_back("file_1.js");
 file.push_back("file_2.js");
 ```
 
-*Data format 2*
+*Data format 2* <br />
+*NOTE: If you have a ready string with file names, you can use the "*split*" method:*
 
 ```c++
 #include <list>
@@ -87,9 +104,44 @@ std::list<std::string> file;
 require.split(name, ';', std::back_inserter(file));
 ```
 
-**NOTE:**
-You can use any convenient container like: *array*, *list*, *vector*, *deque* and so on. <br />
-If you have a ready string with file names, you can use the "*split*" method <br />
+*Getting data*
+
+```c++
+if (require.load(file, path))
+	std::string data(require.data());
+```
+
+*Minification data*
+
+```c++
+std::string data(require.data());
+```
+
+*Save data*
+
+```c++
+require.save("./file.js");
+```
+
+*Check a file saving*
+
+```c++
+if (require.save("./file.js"))
+	std::string data(require.data());
+```
+
+*Append data*
+
+```c++
+require.save("./file.js", std::ios::app);
+```
+
+*Other file flags*
+
+```c++
+std::ios_base::openmode mode = std::ios::app | std::ios::trunc | std::ios::ate;
+require.save("./file.js", mode);
+```
 
 <br />
 <br />

@@ -187,9 +187,9 @@ class Require
 		@param {const std::string &} name - Path to the file
 		@return {bool} - Completion status
 		*/
-		bool save (const std::string &name)
+		bool save (const std::string &name, std::ios_base::openmode mode = std::ios::binary)
 		{
-			std::ofstream file(name.c_str(), std::ios::binary);
+			std::ofstream file(name.c_str(), mode);
 			file << this->stream;
 			file.close();
 

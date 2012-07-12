@@ -19,9 +19,12 @@ int main()
 		// Get data
 		std::string data(require.data(true));
 
-		// Save data into the file
-		if (require.save("./file.js"))
+		// Save data to the file
+		if (require.save(path + "file.js"))
 			std::cout << data << std::endl;
+
+		// Adding data to the end of a File
+		//require.save(path + "file.js", std::ios::app)
 	}
 
 	return 0;
