@@ -17,9 +17,8 @@
 #ifndef __REQUIRE_HPP__
 #define __REQUIRE_HPP__
 
-#include <ios>
-#include <string>
 #include <fstream>
+#include <string>
 #include <functional>
 #include <algorithm>
 #include <iterator>
