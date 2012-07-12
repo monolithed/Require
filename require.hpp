@@ -141,7 +141,7 @@ class Require
 		/*
 		The split<T>() is used to split a string into an array of substrings
 
-		@param {const std::string &} value - The string to be split
+		@param {const std::string &} value
 		@param {const char &} token - Specifies the character to use for splitting the string
 		@param {T} result - Generic form of iterator like std::back_inserter
 		@return {void}
