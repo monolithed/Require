@@ -7,8 +7,7 @@
 * NOTE: The code tested with GCC 4.2.1
 *
 * @author: Alexander Guinness
-* @version: 1.1
-* @return std::string
+* @version: 1.2
 * @license: MIT
 * @date: 7/20/12 9:28 PM
 */
@@ -148,7 +147,7 @@ class Require
 		@return {void}
 		*/
 		template <typename T>
-		void split(std::string value, const char &token, T result)
+		void split (std::string value, const char &token, T result)
 		{
 			// Erase line feeds (LF, CR, HT) and spaces
 			this->erase(value, "\n\t\r ");
