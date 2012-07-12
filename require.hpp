@@ -184,10 +184,11 @@ class Require
 		/*
 		The Require::save() method provides a saving data into a file
 
-		@param {const std::string &} name - Path to the file
+		@param name - Path to the file
+		@param {const std::ios_base::openmode} mode - Bitmask type T3 that describes an object that can store the opening mode.
 		@return {bool} - Completion status
 		*/
-		bool save (const std::string &name, std::ios_base::openmode mode = std::ios::binary)
+		bool save (const std::string &name, const std::ios_base::openmode &mode = std::ios::binary)
 		{
 			std::ofstream file(name.c_str(), mode);
 			file << this->stream;

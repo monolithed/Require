@@ -14,7 +14,7 @@ NOTE: The code tested with GCC 4.2.1
 bool Require::load ( const T &file, [, const std::string &path = "" ] );
 
 // Saving data to a file
-bool Require::save ( const std::string &name, [, std::ios_base::openmode mode = std::ios::binary ] );
+bool Require::save ( const std::string &name, [, const std::ios_base::openmode &mode = std::ios::binary ] );
 
 // Getting data as a string
 std::string Require::data ( [ const bool &minificate = false ] );
