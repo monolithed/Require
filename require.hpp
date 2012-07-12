@@ -110,7 +110,7 @@ class Require
 		/*
 		The Require::load method is used to obtain the result
 
-		@param {std::string &} file - An array of strings with file names
+		@param {const T &} file - An array of strings with file names
 		@param {std::string &} path - Optional param to specify a common path to the files.
 		@return {bool}
 		*/
