@@ -171,7 +171,7 @@ class Require
 		}
 
 		/*
-		The Require::data() method provides a getting the data
+		The Require::data() method is used to get data
 
 		@param {const bool &minificate &} minificate - Minification for file content
 		@return {std::string}
@@ -182,9 +182,9 @@ class Require
 		}
 
 		/*
-		The Require::save() method provides a saving data into a file
+		The Require::save() method provides data saving into a file
 
-		@param name - Path to the file
+		@param name - File path (/files/file.js)
 		@param {const std::ios_base::openmode} mode - Bitmask type T3 that describes an object that can store the opening mode.
 		@return {bool} - Completion status
 		*/
