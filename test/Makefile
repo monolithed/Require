@@ -10,8 +10,7 @@ build:
 
 clean:
 	@for i in $(FILE) $(DATA); \
-		do \
-			if test -f $$i; \
-				then rm $$i; \
-			fi; \
+		do if test -f $$i; \
+			then rm $$i; \
+		fi; \
 	done;
