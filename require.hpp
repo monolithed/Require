@@ -200,13 +200,13 @@ std::string Require::minify (const bool &minificate)
 	// Remove comments
 	while (i != this->stream.end())
 	{
-		//	/ RegExp / : Literal regular expression
-		//	/* */      : Multi-line block comment
-		//	/*@...@*/  : Conditional compilation comment
-		//	\          : Escape sequences
-		//	//         : Sigle-line comment
-		//	''         : Single-quote delimited string
-		//	""         : Double-quote delimited string
+		// / RegExp / : Literal regular expression
+		// /* */      : Multi-line block comment
+		// /*@...@*/  : Conditional compilation comment
+		// \          : Escape sequences
+		// //         : Single-line comment
+		// ''         : Single-quote delimited string
+		// ""         : Double-quote delimited string
 
 		// Double/Single-quote delimited string
 		if (*i == '\'' || *i == '"')
@@ -259,7 +259,7 @@ std::string Require::minify (const bool &minificate)
 	// Erase line feeds (LF, CR, HT)
 	this->erase(result, "\n\t\r");
 
-	// Erase spaces (leaving only single spaces)
+	// Erase spaces
 	result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
 
 	return result;
