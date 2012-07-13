@@ -86,87 +86,7 @@ class Require
 			return stream;
 		}
 
-		/*
-		The Require::minify() method provides a minification for file content
-
-		@param {const bool &minificate}
-		@see {Require::data}
-		@return {std::string}
-		*/
-		std::string minify (const bool &minificate)
-		{
-			if (!minificate)
-				return this->stream;
-
-			std::string::const_iterator i = this->stream.begin();
-			std::string result;
-
-			// Remove comments
-			while (i != this->stream.end())
-			{
-				//	/ RegExp / : Literal regular expression 
-				//	/* */      : Multi-line block comment
-				//	/*@...@*/  : Conditional compilation comment
-				//	\          : Escape sequences
-				//	//         : Sigle-line comment  
-				//	''         : Single-quote delimited string
-				//	""         : Double-quote delimited string
-
-				// Double/Single-quote delimited string
-				if (*i == '\'' || *i == '"') {
-					char j = *i;
-
-					do {
-						result.push_back(*i);
-
-						// Escape sequences
-						if (*i == '\\')
-							result.push_back(*++i);
-					}
-					while (*++i != j);
-				}
-
-				// Sequences: //, /* */
-				if (*i == '/') 
-				{
-					// Single-line sequences
-					if (*(i + 1) == '/')
-					{
-						// Escape sequences
-						if (*(i - 1) == '\\')
-							result.push_back(*i++);
-
-						// Regular expression + single-line comment (/ ///)
-						else if (*(i + 2) == '/' && *(i + 1) != '/');
-
-						// Sigle-line comments
-						else {
-							while (*++i != '\n');
-								continue;
-						}
-					}
-
-					// Multi-line block comments /* */
-					else if (*(i + 1) == '*')
-					{
-						do {
-							while (*++i != '*');
-								++i;
-						}
-						while (*i++ != '/');
-					}
-				}
-				result.push_back(*i++);
-			}
-
-			// Erase line feeds (LF, CR, HT)
-			this->erase(result, "\n\t\r");
-
-			// Erase spaces (leaving only single spaces)
-			result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
-
-			return result;
-		}
+		std::string minify (const bool &minificate);
 
 	public:
 		/*
@@ -261,5 +181,88 @@ class Require
 
 		std::string stream;
 };
+
+/*
+The Require::minify() method provides a minification for file content
+
+@param {const bool &minificate}
+@see {Require::data}
+@return {std::string}
+*/
+std::string Require::minify (const bool &minificate)
+{
+	if (!minificate)
+		return this->stream;
+
+	std::string::const_iterator i = this->stream.begin(), quote;
+	std::string result;
+
+	// Remove comments
+	while (i != this->stream.end())
+	{
+		//	/ RegExp / : Literal regular expression
+		//	/* */      : Multi-line block comment
+		//	/*@...@*/  : Conditional compilation comment
+		//	\          : Escape sequences
+		//	//         : Sigle-line comment
+		//	''         : Single-quote delimited string
+		//	""         : Double-quote delimited string
+
+		// Double/Single-quote delimited string
+		if (*i == '\'' || *i == '"')
+		{
+			quote = i;
+
+			do {
+				result.push_back(*i);
+
+				// Escape sequences
+				if (*i == '\\')
+					result.push_back(*++i);
+			}
+			while (*++i != *quote);
+		}
+
+		// Sequences: //, /* */
+		if (*i == '/')
+		{
+			// Single-line sequences
+			if (*(i + 1) == '/')
+			{
+				// Escape sequences
+				if (*(i - 1) == '\\')
+					result.push_back(*i++);
+
+				// Regular expression + single-line comment (/ ///)
+				else if (*(i + 2) == '/' && *(i + 1) != '/');
+
+				// Sigle-line comments
+				else {
+					while (*++i != '\n');
+						continue;
+				}
+			}
+
+			// Multi-line block comments /* */
+			else if (*(i + 1) == '*')
+			{
+				do {
+					while (*++i != '*');
+						++i;
+				}
+				while (*i++ != '/');
+			}
+		}
+		result.push_back(*i++);
+	}
+
+	// Erase line feeds (LF, CR, HT)
+	this->erase(result, "\n\t\r");
+
+	// Erase spaces (leaving only single spaces)
+	result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
+
+	return result;
+}
 
 #endif
