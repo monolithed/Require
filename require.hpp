@@ -23,6 +23,9 @@
 #include <algorithm>
 #include <iterator>
 
+#include <list>
+
+
 class Require
 {
 	public:
@@ -93,17 +96,80 @@ class Require
 		@see {Require::data}
 		@return {std::string}
 		*/
+
 		std::string minify (const bool &minificate)
 		{
-			if (minificate)
-			{
-				// Erase line feeds (LF, CR, HT)
-				this->erase(this->stream, "\n\t\r");
+			if (!minificate)
+				return this->stream;
 
-				// Erase spaces (leaving only single spaces)
-				this->stream.erase(std::unique(this->stream.begin(), this->stream.end(), find_equal<char>(' ')), this->stream.end());
+			std::string::const_iterator i = this->stream.begin();
+			std::string result;
+
+			// Remove comments
+			while (i != this->stream.end())
+			{
+				//	/ RegExp / : Literal regular expression 
+				//	/* */      : Multi-line block comment
+				//	/*@...@*/  : Conditional compilation comment
+				//	\          : Escape sequences
+				//	//         : Sigle-line comment  
+				//	''         : Single-quote delimited string
+				//	""         : Double-quote delimited string
+
+				// Double/Single-quote delimited string
+				if (*i == '\'' || *i == '"') {
+					char j = *i;
+
+					do {
+						result.push_back(*i);
+
+						// Escape sequences
+						if (*i == '\\')
+							result.push_back(*++i);
+					}
+					while (*++i != j);
+				}
+
+				// Sequences: //, /* */
+				if (*i == '/') 
+				{
+					// Single-line sequences
+					if (*(i + 1) == '/')
+					{
+						// Escape sequences
+						if (*(i - 1) == '\\')
+							result.push_back(*i++);
+
+						// Regular expression + single-line comment (/ ///)
+						else if (*(i + 2) == '/' && *(i + 1) != '/');
+
+						// Sigle-line comments
+						else {
+							while (*++i != '\n');
+								continue;
+						}
+					}
+
+					// Multi-line block comments /* */
+					else if (*(i + 1) == '*')
+					{
+						do {
+							while (*++i != '*');
+								++i;
+						}
+						while (*i++ != '/');
+					}
+				}
+				result.push_back(*i++);
 			}
-			return this->stream;
+
+			// Erase line feeds (LF, CR, HT)
+			//this->erase(result, "\n\t\r");
+
+			// Erase spaces (leaving only single spaces)
+			result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
+
+			return result;
 		}
 
 	public:
