@@ -150,7 +150,7 @@ class Require
 					}
 
 					// Multi-line block comments /* */
-					else if (*(i + 1) == '*' && *(i + 2) != '@')
+					else if (*(i + 1) == '*')
 					{
 						do {
 							while (*++i != '*');
