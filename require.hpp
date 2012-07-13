@@ -96,7 +96,6 @@ class Require
 		@see {Require::data}
 		@return {std::string}
 		*/
-
 		std::string minify (const bool &minificate)
 		{
 			if (!minificate)
@@ -151,7 +150,7 @@ class Require
 					}
 
 					// Multi-line block comments /* */
-					else if (*(i + 1) == '*')
+					else if (*(i + 1) == '*' && *(i + 2) != '@')
 					{
 						do {
 							while (*++i != '*');
