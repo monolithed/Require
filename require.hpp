@@ -23,9 +23,6 @@
 #include <algorithm>
 #include <iterator>
 
-#include <list>
-
-
 class Require
 {
 	public:
