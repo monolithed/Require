@@ -163,7 +163,7 @@ class Require
 			}
 
 			// Erase line feeds (LF, CR, HT)
-			//this->erase(result, "\n\t\r");
+			this->erase(result, "\n\t\r");
 
 			// Erase spaces (leaving only single spaces)
 			result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
