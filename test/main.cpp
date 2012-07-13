@@ -18,7 +18,8 @@ int main()
 
 	/*
 	Or you can add the file names explicity:
-	file.push_back("file_1.js");	file.push_back("file_2.js");
+	file.push_back("file_1.js");
+	file.push_back("file_2.js");
 	*/
 
 	// load the file
