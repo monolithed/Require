@@ -54,9 +54,9 @@ class Require
 		};
 
 		/*
-		The erase<T>() is used to specified characters from a string
+		The erase<T>() erases specified characters in a string
 
-		@param {std::string &} value - The string to be erase
+		@param {std::string &} value - Input string
 		@param {const T &} token - Specifies the character to use for erase the string
 		@return {std::string} - As a result, the original string is modified
 		*/
