@@ -182,7 +182,7 @@ class Require
 
 		std::string stream;
 };
-#include <iostream>
+
 /*
 The Require::minify() method provides a minification for file content
 
