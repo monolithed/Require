@@ -7,7 +7,7 @@
 * NOTE: The code tested with GCC 4.2.1
 *
 * @author: Alexander Guinness
-* @version: 1.2
+* @version: 1.3
 * @license: MIT
 * @date: 7/20/12 9:28 PM
 */
@@ -22,6 +22,7 @@
 #include <functional>
 #include <algorithm>
 #include <iterator>
+#include <cctype>
 
 class Require
 {
@@ -194,8 +195,10 @@ std::string Require::minify (const bool &minificate)
 	if (!minificate)
 		return this->stream;
 
-	std::string::const_iterator i = this->stream.begin(), quote;
+	std::string::iterator i = this->stream.begin(), quote;
 	std::string result;
+
+	int escape = 0;
 
 	// Remove comments
 	while (i != this->stream.end())
@@ -223,18 +226,18 @@ std::string Require::minify (const bool &minificate)
 			while (*++i != *quote);
 		}
 
-		// Sequences: //, /* */
+		// Sequences: / /, //, /* */
 		if (*i == '/')
 		{
 			// Single-line sequences
 			if (*(i + 1) == '/')
 			{
-				// Escape sequences
+				// Escape sequences in regular expressions
 				if (*(i - 1) == '\\')
 					result.push_back(*i++);
 
 				// Regular expression + single-line comment (/ ///)
-				else if (*(i + 2) == '/' && *(i + 1) != '/');
+				else if (*(i + 2) == '/');
 
 				// Sigle-line comments
 				else {
@@ -253,11 +256,37 @@ std::string Require::minify (const bool &minificate)
 				while (*i++ != '/');
 			}
 		}
-		result.push_back(*i++);
-	}
 
-	// Erase line feeds (LF, CR, HT)
-	this->erase(result, "\n\t\r");
+		// Escape sequences
+		if (*i == '\\')
+		{
+			static bool status = 0;
+			escape = 0;
+
+			result.push_back(*i++);
+
+			do {
+				if (std::isalpha(*i))
+					status = 1;
+				escape++;
+			}
+			while (*++i != '\n');
+
+				i -= escape;
+
+			if (!status)
+				result.push_back('\n');
+		}
+
+		// line feeds (LF, CR, HT)
+		if (*i == '\r' || *i == '\n' || *i == '\t')
+			result.push_back(' ');
+
+		else
+			result.push_back(*i);
+
+		i++;
+	}
 
 	// Erase spaces
 	result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
