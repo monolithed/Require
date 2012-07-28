@@ -195,7 +195,7 @@ std::string Require::minify (const bool &minificate)
 	if (!minificate)
 		return this->stream;
 
-	std::string::iterator i = this->stream.begin(), quote;
+	std::string::const_iterator i = this->stream.begin(), quote;
 	std::string result;
 
 	int escape = 0;
