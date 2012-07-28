@@ -1,9 +1,11 @@
 # Require
 
-Require is a file loader module. <br />
+<img src="http://habrastorage.org/storage2/039/199/eb4/039199eb4cb3d7939517b026b0513326.png" alt="" />
+
+Require is a cross-platform file loader module. <br />
 The main objective of this module is to concatenate multiple files into one file or stream. <br />
 Using a modular file loader you will improve the speed and quality of your code. <br />
-Also the Require provides a simple minification for file content. <br />
+Also the Require provides a simple minification for file content (Not yet recommended). <br />
 <br />
 NOTE: The code tested with GCC 4.2.1
 
