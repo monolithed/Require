@@ -182,7 +182,7 @@ class Require
 
 		std::string stream;
 };
-
+#include <iostream>
 /*
 The Require::minify() method provides a minification for file content
 
@@ -198,20 +198,18 @@ std::string Require::minify (const bool &minificate)
 	std::string::const_iterator i = this->stream.begin(), quote;
 	std::string result;
 
-	int escape = 0;
-
-	// Remove comments
 	while (i != this->stream.end())
 	{
 		// / RegExp / : Literal regular expression
 		// /* */      : Multi-line block comment
 		// /*@...@*/  : Conditional compilation comment
 		// \          : Escape sequences
+		// \          : Line terminator sequence
 		// //         : Single-line comment
 		// ''         : Single-quote delimited string
 		// ""         : Double-quote delimited string
 
-		// Double/Single-quote delimited string
+		// Double / Single-quote delimited string
 		if (*i == '\'' || *i == '"')
 		{
 			quote = i;
@@ -229,67 +227,58 @@ std::string Require::minify (const bool &minificate)
 		// Sequences: / /, //, /* */
 		if (*i == '/')
 		{
-			// Single-line sequences
-			if (*(i + 1) == '/')
+			// Literal regular expression
+			if (*(i + 1) != '/' && *(i + 1) != '*')
 			{
-				// Escape sequences in regular expressions
-				if (*(i - 1) == '\\')
-					result.push_back(*i++);
+				do {
+					result.push_back(*i);
 
-				// Regular expression + single-line comment (/ ///)
-				else if (*(i + 2) == '/');
-
-				// Sigle-line comments
-				else {
-					while (*++i != '\n');
-						continue;
+					if (*i == '/' && *(i - 1) != '\\')
+						break;
 				}
+				while (*++i != '\n');
 			}
 
-			// Multi-line block comments /* */
-			else if (*(i + 1) == '*')
+			// Escape sequences in regular expressions [ / \/ / ]
+			else if (*(i - 1) == '\\')
+				result.push_back(*i++);
+
+			// Regular expression + single-line comment [ / /// ]
+			else if (*(i + 2) == '/')
+				result.push_back(*i++);
+
+			// Single-line sequences [ // ]
+			else if (*(i + 1) == '/')
+			{
+				while (*++i != '\n');
+					continue;
+			}
+
+			// Multi-line block comments [ /* */ ]
+			if (*(i + 1) == '*')
 			{
 				do {
 					while (*++i != '*');
 						++i;
 				}
 				while (*i++ != '/');
+
+				result.push_back(*i);
 			}
 		}
 
-		// Escape sequences
-		if (*i == '\\')
-		{
-			static bool status = 0;
-			escape = 0;
-
-			result.push_back(*i++);
-
-			do {
-				if (std::isalpha(*i))
-					status = 1;
-				escape++;
-			}
-			while (*++i != '\n');
-
-				i -= escape;
-
-			if (!status)
-				result.push_back('\n');
-		}
+		// Tabulation sequences
+		//if (*i == '\t')
+		//	while (std::isalpha(*i));
 
 		// line feeds (LF, CR, HT)
-		if (*i == '\r' || *i == '\n' || *i == '\t')
-			result.push_back(' ');
-
-		else
-			result.push_back(*i);
+		else result.push_back(*i == '\r' || *i == '\n' ? ' ' : *i);
 
 		i++;
 	}
 
 	// Erase spaces
-	result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
+	// result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
 
 	return result;
 }
