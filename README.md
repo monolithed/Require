@@ -5,7 +5,6 @@
 Require is a cross-platform file loader module. <br />
 The main objective of this module is to concatenate multiple files into one file or stream. <br />
 Using a modular file loader you will improve the speed and quality of your code. <br />
-Also the Require provides a simple minification for file content (Not yet recommended). <br />
 <br />
 NOTE: The code tested with GCC 4.2.1
 
@@ -19,7 +18,7 @@ bool Require::load ( const T &file, [, const std::string &path = "" ] );
 bool Require::save ( const std::string &name, [, const std::ios_base::openmode &mode = std::ios::binary ] );
 
 // Getting data as a string
-std::string Require::data ( [ const bool &minificate = false ] );
+std::string Require::data;
 ```
 
 ## Using
@@ -29,16 +28,16 @@ std::string Require::data ( [ const bool &minificate = false ] );
 
 ```javascript
 // files/file_1.js
-;(function() {
-	console.log('File 1!');
-}());
+var foo = function() {
+	return 1;
+};
 ```
 
 ```javascript
 // files/file_2.js
-;(function() {
-	console.log('File 1!');
-}());
+var bar = function() {
+	return 2;
+};
 ```
 
 **Code**:
@@ -62,12 +61,9 @@ int main()
 	// load the file
 	if (require.load(file, path))
 	{
-		// Get data
-		std::string data(require.data(true));
-
 		// Save data into the file
 		if (require.save("./file.js"))
-			std::cout << data << std::endl;
+			std::cout << require.data << std::endl;
 	}
 
 	return 0;
@@ -77,7 +73,13 @@ int main()
 **Result:**
 
 ```javascript
-;(function() {console.log('File 1!');}());;(function() {console.log('File 2!');}());
+var foo = function() {
+	return 1;
+};
+
+var bar = function() {
+	return 2;
+};
 ```
 
 ##Options:
@@ -109,14 +111,7 @@ require.split(name, ';', std::back_inserter(file));
 *Getting data*
 
 ```c++
-if (require.load(file, path))
-	std::string data(require.data());
-```
-
-*Minification data*
-
-```c++
-require.data(true);
+require.data;
 ```
 
 *Save data*

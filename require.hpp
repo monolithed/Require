@@ -2,12 +2,11 @@
 * <Require> is a cross-platform file loader module.
 * The main objective of this module is to concatenate multiple files into one.
 * Using a modular file loader you will improve the speed and quality of your code.
-* Also the <Require> provides a minification for file content.
 *
 * NOTE: The code tested with GCC 4.2.1
 *
 * @author: Alexander Guinness
-* @version: 1.3
+* @version: 0.0.4
 * @license: MIT
 * @date: 7/20/12 9:28 PM
 */
@@ -19,10 +18,8 @@
 
 #include <fstream>
 #include <string>
-#include <functional>
 #include <algorithm>
 #include <iterator>
-#include <cctype>
 
 class Require
 {
@@ -33,26 +30,6 @@ class Require
 	private:
 		Require(const Require&);
 		const Require& operator=(const Require&);
-
-		/*
-		The find_equal<T>() provides a logical predicate to compare the specified values
-
-		@param {const &T} value - equal value
-		@use: find_equal<char>(' ');
-		@return {bool}
-		*/
-		template <typename T>
-		struct find_equal : std::binary_function <T, T, bool>
-		{
-			find_equal(const T &value) : value(value) {};
-
-			bool operator()(const T &left, const T &right) const {
-				return left == value && right == value;
-			}
-
-			private:
-				T value;
-		};
 
 		/*
 		The erase<T>() erases specified characters in a string
@@ -112,7 +89,7 @@ class Require
 				infile.open((path + *i).c_str(), std::ios::binary);
 
 				if(infile.is_open())
-					this->stream.append(this->read(infile) + "\n");
+					this->data.append(this->read(infile) + "\n");
 
 				infile.close();
 
@@ -154,17 +131,6 @@ class Require
 		}
 
 		/*
-		The Require::data() method is used to get data
-
-		@param {const bool &minificate &} minificate - Minification for file content
-		@return {std::string}
-		*/
-		std::string data (const bool &minificate = false)
-		{
-			return this->minify(minificate);
-		}
-
-		/*
 		The Require::save() method provides data saving into a file
 
 		@param name - File path (/files/file.js)
@@ -174,113 +140,13 @@ class Require
 		bool save (const std::string &name, const std::ios_base::openmode &mode = std::ios::binary)
 		{
 			std::ofstream file(name.c_str(), mode);
-			file << this->stream;
+			file << this->data;
 			file.close();
 
 			return file.good();
 		}
 
-		std::string stream;
+		std::string data;
 };
-
-/*
-The Require::minify() method provides a minification for file content
-
-@param {const bool &minificate}
-@see {Require::data}
-@return {std::string}
-*/
-std::string Require::minify (const bool &minificate)
-{
-	if (!minificate)
-		return this->stream;
-
-	std::string::const_iterator i = this->stream.begin(), quote;
-	std::string result;
-
-	while (i != this->stream.end())
-	{
-		// / RegExp / : Literal regular expression
-		// /* */      : Multi-line block comment
-		// /*@...@*/  : Conditional compilation comment
-		// \          : Escape sequences
-		// \          : Line terminator sequence
-		// //         : Single-line comment
-		// ''         : Single-quote delimited string
-		// ""         : Double-quote delimited string
-
-		// Double / Single-quote delimited string
-		if (*i == '\'' || *i == '"')
-		{
-			quote = i;
-
-			do {
-				result.push_back(*i);
-
-				// Escape sequences
-				if (*i == '\\')
-					result.push_back(*++i);
-			}
-			while (*++i != *quote);
-		}
-
-		// Sequences: / /, //, /* */
-		if (*i == '/')
-		{
-			// Literal regular expression
-			if (*(i + 1) != '/' && *(i + 1) != '*')
-			{
-				do {
-					result.push_back(*i);
-
-					if (*i == '/' && *(i - 1) != '\\')
-						break;
-				}
-				while (*++i != '\n');
-			}
-
-			// Escape sequences in regular expressions [ / \/ / ]
-			else if (*(i - 1) == '\\')
-				result.push_back(*i++);
-
-			// Regular expression + single-line comment [ / /// ]
-			else if (*(i + 2) == '/')
-				result.push_back(*i++);
-
-			// Single-line sequences [ // ]
-			else if (*(i + 1) == '/')
-			{
-				while (*++i != '\n');
-					continue;
-			}
-
-			// Multi-line block comments [ /* */ ]
-			if (*(i + 1) == '*')
-			{
-				do {
-					while (*++i != '*');
-						++i;
-				}
-				while (*i++ != '/');
-
-				result.push_back(*i);
-			}
-		}
-
-		// Tabulation sequences
-		//if (*i == '\t')
-		//	while (std::isalpha(*i));
-
-		// line feeds (LF, CR, HT)
-		else result.push_back(*i == '\r' || *i == '\n' ? ' ' : *i);
-
-		i++;
-	}
-
-	// Erase spaces
-	// result.erase(std::unique(result.begin(), result.end(), find_equal<char>(' ')), result.end());
-
-	return result;
-}
 
 #endif
