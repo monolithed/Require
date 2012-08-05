@@ -1,6 +1,6 @@
 # Require
 
-<img src="http://habrastorage.org/storage2/039/199/eb4/039199eb4cb3d7939517b026b0513326.png" alt="" />
+<img src="http://habrastorage.org/storage2/b26/0ee/b62/b260eeb62faca9d226da501cdc1fa26d.png" alt="" />
 
 Require is a cross-platform file loader module. <br />
 The main objective of this module is to concatenate multiple files into one file or stream. <br />
