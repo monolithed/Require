@@ -4,7 +4,6 @@
 
 Require is a cross-platform file concatenator. <br />
 The main objective of this module is to concatenate multiple files into one file or stream. <br />
-NOTE: The code tested with GCC 4.2.1
 
 ##Synopsis:
 
@@ -149,8 +148,11 @@ g++ -Wall -O2 -s -o main main.cpp
 
 ##Tests:
 
+NOTE: The code tested with GCC and Clang
+
 ```c++
 make -C tests
+
 ```
 
 

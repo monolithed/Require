@@ -1,10 +1,8 @@
 /*
 * <Require> is a cross-platform file concatenator.
 *
-* NOTE: The code tested with GCC 4.2.1
-*
 * @author: Alexander Abashkin
-* @version: 0.0.4
+* @version: 0.0.5
 * @license: MIT
 * @date: 7/20/12 9:28 PM
 */
