@@ -7,7 +7,7 @@ int main()
 	Require require;
 
 	// File names
-	std::string name("file_1.js;file_2.js;");
+	std::string name("file_1.js;file_2.js");
 
 	// Split file names and insert into any STL container
 	std::list<std::string> file;

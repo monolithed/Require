@@ -1,11 +1,9 @@
 /*
-* <Require> is a cross-platform file loader module.
-* The main objective of this module is to concatenate multiple files into one.
-* Using a modular file loader you will improve the speed and quality of your code.
+* <Require> is a cross-platform file concatenator.
 *
 * NOTE: The code tested with GCC 4.2.1
 *
-* @author: Alexander Guinness
+* @author: Alexander Abashkin
 * @version: 0.0.4
 * @license: MIT
 * @date: 7/20/12 9:28 PM
@@ -63,8 +61,6 @@ class Require
 
 			return stream;
 		}
-
-		std::string minify (const bool &minificate);
 
 	public:
 		/*

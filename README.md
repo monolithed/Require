@@ -1,24 +1,22 @@
 # Require
 
-<img src="http://habrastorage.org/storage2/b26/0ee/b62/b260eeb62faca9d226da501cdc1fa26d.png" alt="" />
+[![Build Status](https://travis-ci.org/monolithed/Require.png)](https://travis-ci.org/monolithed/Require)
 
-Require is a cross-platform file loader module. <br />
+Require is a cross-platform file concatenator. <br />
 The main objective of this module is to concatenate multiple files into one file or stream. <br />
-Using a modular file loader you will improve the speed and quality of your code. <br />
-<br />
 NOTE: The code tested with GCC 4.2.1
 
 ##Synopsis:
 
 ```c++
 // Loading data from files
-bool Require::load ( const T &file, [, const std::string &path = "" ] );
+bool load ( const T &file, [, const std::string &path = "" ] );
 
 // Saving data to a file
-bool Require::save ( const std::string &name, [, const std::ios_base::openmode &mode = std::ios::binary ] );
+bool save ( const std::string &name, [, const std::ios_base::openmode &mode = std::ios::binary ] );
 
 // Getting data as a string
-std::string Require::data;
+std::string data;
 ```
 
 ## Using
@@ -52,7 +50,7 @@ int main()
 	Require require;
 
 	std::string path("./files/");
-	std::string name("file_1.js;file_2.js;");
+	std::string name("file_1.js;file_2.js");
 
 	// Set file names
 	std::list<std::string> file;
@@ -123,8 +121,9 @@ require.save("./file.js");
 *Check a file saving*
 
 ```c++
-if (require.save("./file.js"))
+if (require.save("./file.js")) {
 	std::string data(require.data());
+}
 ```
 
 *Append data*
@@ -147,9 +146,17 @@ g++ -Wall -O2 -s -o main main.cpp
 ./main
 ```
 
+
+##Tests:
+
+```c++
+make -C tests
+```
+
+
 <br />
 <br />
 
 * The Require module is licensed under the MIT (MIT_LICENSE.txt) license.
 
-* Copyright (c) 2012 [Alexander Guinness] (https://github.com/monolithed)
+* Copyright (c) 2012 [Alexander Abashkin] (https://github.com/monolithed)

@@ -1,11 +1,11 @@
-CXX = g++
-CXXFLAGS = -Wall -O2 -s -o
-FILE = main
-DATA = ./files/file.js
+CXX      = g++
+CXXFLAGS = -Wall -O2 -o
+FILE     = main
+DATA     = ./files/file.js
 
 all: clean build
 
-build: 
+build:
 	$(CXX) $(CXXFLAGS) $(FILE) $(FILE).cpp && ./$(FILE)
 
 clean:
