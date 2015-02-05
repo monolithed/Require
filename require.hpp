@@ -39,8 +39,9 @@ class Require
 		{
 			std::string::size_type i = 0;
 
-			while((i = value.find_first_of(token, i)) != std::string::npos)
+			while((i = value.find_first_of(token, i)) != std::string::npos) {
 				value.erase(i, 1);
+			}
 
 			return value;
 		}
@@ -71,24 +72,26 @@ class Require
 		template <typename T>
 		bool load (const T &file, const std::string &path = "")
 		{
-			if (file.empty())
+			if (file.empty()) {
 				return false;
+			}
 
 			std::ifstream infile;
 
 			typename T::const_iterator i = file.begin();
 
-			while (i != file.end())
-			{
+			while (i != file.end()) {
 				infile.open((path + *i).c_str(), std::ios::binary);
 
-				if(infile.is_open())
+				if(infile.is_open()) {
 					this->data.append(this->read(infile) + "\n");
+				}
 
 				infile.close();
 
 				i++;
 			}
+
 	 		return infile.good();
 		}
 
@@ -109,12 +112,14 @@ class Require
 			std::string::size_type size = value.size() - 1, start = 0, end = 0;
 
 			// Remove the last <delimiter> character
-			if (value.at(size) == token)
+			if (value.at(size) == token) {
 				value.erase(size);
+			}
 
 			// Remove the first <delimiter> character
-			if (value.at(0) == token)
+			if (value.at(0) == token) {
 				value.erase(0, 1);
+			}
 
 			while ((end = value.find(token, start)) != std::string::npos) {
 				*result++ = value.substr(start, end - start);
@@ -134,6 +139,7 @@ class Require
 		bool save (const std::string &name, const std::ios_base::openmode &mode = std::ios::binary)
 		{
 			std::ofstream file(name.c_str(), mode);
+
 			file << this->data;
 			file.close();
 

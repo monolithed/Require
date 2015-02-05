@@ -14,6 +14,9 @@ bool load ( const T &file, [, const std::string &path = "" ] );
 // Saving data to a file
 bool save ( const std::string &name, [, const std::ios_base::openmode &mode = std::ios::binary ] );
 
+// Used to split a string into an array of substrings
+void split ( std::string value, const char &token, T result )
+
 // Getting data as a string
 std::string data;
 ```

@@ -1,16 +1,18 @@
-CXX      = g++
-CXXFLAGS = -Wall -O2 -o
-FILE     = main
-DATA     = ./files/file.js
+CXX      := g++
+CXXFLAGS := -Wall -O2 -o
 
-all: clean build
+FILE     = main
+COMPILE  = $(CXX) $(CXXFLAGS)
+
+.PHONY:
+
+all: clean build debug
 
 build:
-	$(CXX) $(CXXFLAGS) $(FILE) $(FILE).cpp && ./$(FILE)
+	$(COMPILE) $(FILE) $(FILE).cpp
+
+debug:
+	./$(FILE)
 
 clean:
-	@for i in $(FILE) $(DATA); \
-		do if test -f $$i; \
-			then rm $$i; \
-		fi; \
-	done;
+	@rm -f $(FILE) ./files/file.js;
