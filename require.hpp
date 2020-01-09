@@ -1,5 +1,5 @@
 /*
-* <Require> is a cross-platform file concatenator.
+* A cross-platform file concatenator
 *
 * @author: Alexander Abashkin
 * @version: 0.0.5
@@ -17,8 +17,7 @@
 #include <algorithm>
 #include <iterator>
 
-class Require
-{
+class Require {
 	public:
 		Require() {};
 		~Require() {};
@@ -27,34 +26,20 @@ class Require
 		Require(const Require&);
 		const Require& operator=(const Require&);
 
-		/*
-		The erase<T>() erases specified characters in a string
-
-		@param {std::string &} value - Input string
-		@param {const T &} token - Specifies the character to use for erase the string
-		@return {std::string} - As a result, the original string is modified
-		*/
+		/* Erases specified characters */
 		template <typename T>
-		std::string erase (std::string &value, const T &token)
-		{
+		std::string erase(std::string &value, const T &token) {
 			std::string::size_type i = 0;
 
-			while((i = value.find_first_of(token, i)) != std::string::npos) {
+			while ((i = value.find_first_of(token, i)) != std::string::npos) {
 				value.erase(i, 1);
 			}
 
 			return value;
 		}
 
-		/*
-		The Require::read() method is used to get a file stream as a string
-
-		@param {std::ifstream &} file - input file stream
-		@see {Require::load}
-		@return {std::string}
-		*/
-		std::string read (std::ifstream &file) const
-		{
+		/* Reads a file stream as a string */
+		std::string read(std::ifstream &file) const {
 			typedef std::istreambuf_iterator<char> file_iterator;
 			std::string stream((file_iterator(file)), file_iterator());
 
@@ -62,16 +47,8 @@ class Require
 		}
 
 	public:
-		/*
-		The Require::load method is used to obtain the result
-
-		@param {const T &} file - An array of strings with file names
-		@param {std::string &} path - Optional param to specify a common path to the files.
-		@return {bool}
-		*/
 		template <typename T>
-		bool load (const T &file, const std::string &path = "")
-		{
+		bool load(const T &file, const std::string &path = "") {
 			if (file.empty()) {
 				return false;
 			}
@@ -95,17 +72,9 @@ class Require
 	 		return infile.good();
 		}
 
-		/*
-		The split<T>() is used to split a string into an array of substrings
-
-		@param {const std::string &} value
-		@param {const char &} token - Specifies the character to use for splitting the string
-		@param {T} result - Generic form of iterator like std::back_inserter
-		@return {void}
-		*/
+		/* The result parameter is a generic form of iterator like std::back_inserter */
 		template <typename T>
-		void split (std::string value, const char &token, T result)
-		{
+		void split(std::string value, const char &token, T result) {
 			// Erase line feeds (LF, CR, HT) and spaces
 			this->erase(value, "\n\t\r ");
 
@@ -129,15 +98,8 @@ class Require
 			*result++ = value.substr(start);
 		}
 
-		/*
-		The Require::save() method provides data saving into a file
-
-		@param name - File path (/files/file.js)
-		@param {const std::ios_base::openmode} mode - Bitmask type T3 that describes an object that can store the opening mode.
-		@return {bool} - Completion status
-		*/
-		bool save (const std::string &name, const std::ios_base::openmode &mode = std::ios::binary)
-		{
+		/* Provides data saving into a file */
+		bool save (const std::string &name, const std::ios_base::openmode &mode = std::ios::binary) {
 			std::ofstream file(name.c_str(), mode);
 
 			file << this->data;
